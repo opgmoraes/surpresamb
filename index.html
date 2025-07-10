@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Surpresa Romântica</title>
-  <script src="https://www.youtube.com/iframe_api"></script>
   <style>
     * {
       box-sizing: border-box;
@@ -85,23 +84,10 @@
       z-index: 10;
     }
     .message p {
-      margin: 0 0 10px 0;
+      margin: 0;
       color: #a9445b;
       font-size: 1.1rem;
       text-align: center;
-    }
-    .play-btn {
-      background: #d45b71;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      padding: 8px 16px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    .play-btn:hover {
-      background: #a9445b;
     }
     .heart {
       position: absolute;
@@ -148,53 +134,19 @@
     <div class="ribbon"></div>
     <div class="lid" id="lid"></div>
     <div class="message" id="message">
-      <p>Você é o meu melhor capítulo. ❤️<br>Te amo!</p>
-      <button class="play-btn" id="playMusic">Clique para ouvir 🎵</button>
+      <p>Você é o meu melhor capítulo. 🤍<br>Te amo!</p>
     </div>
   </div>
 
-  <!-- Player invisível do YouTube -->
-  <div id="music-container" style="display:none;"></div>
-
   <script>
-    let player;
-
-    function onYouTubeIframeAPIReady() {
-      player = new YT.Player('music-container', {
-        height: '0',
-        width: '0',
-        videoId: 'd1INCiRKLyw', // Olhos Castanhos - Geovanna Jainy
-        playerVars: {
-          autoplay: 0,
-          loop: 1,
-          playlist: 'd1INCiRKLyw'
-        },
-        events: {
-          onReady: (event) => {
-            const iframe = event.target.getIframe();
-            iframe.setAttribute('allow', 'autoplay');
-          }
-        }
-      });
-    }
-
     const box = document.getElementById('box');
     const lid = document.getElementById('lid');
     const message = document.getElementById('message');
-    const playBtn = document.getElementById('playMusic');
 
     box.addEventListener('click', () => {
       lid.classList.toggle('open');
       message.style.display = lid.classList.contains('open') ? 'flex' : 'none';
       if (lid.classList.contains('open')) spawnHearts(15);
-    });
-
-    playBtn.addEventListener('click', () => {
-      if (player && typeof player.playVideo === 'function') {
-        player.playVideo();
-        playBtn.textContent = 'Tocando... 🎶';
-        playBtn.disabled = true;
-      }
     });
 
     function spawnHearts(count) {
