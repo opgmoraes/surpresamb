@@ -18,7 +18,7 @@
       align-items: center;
       justify-content: center;
       background: #ffe6e8;
-      font-family: Arial, sans-serif;
+      font-family: 'Arial', sans-serif;
     }
     .gift-box {
       width: 200px;
@@ -154,21 +154,26 @@
   </div>
 
   <!-- Player invisível do YouTube -->
-  <div id="music" style="display: none;"></div>
+  <div id="music-container" style="display:none;"></div>
 
   <script>
     let player;
 
-    // Cria o player invisível quando a API do YouTube estiver pronta
     function onYouTubeIframeAPIReady() {
-      player = new YT.Player('music', {
+      player = new YT.Player('music-container', {
         height: '0',
         width: '0',
-        videoId: 'd1INCiRKLyw', // Geovanna Jainy - Olhos Castanhos
+        videoId: 'd1INCiRKLyw', // Olhos Castanhos - Geovanna Jainy
         playerVars: {
           autoplay: 0,
           loop: 1,
           playlist: 'd1INCiRKLyw'
+        },
+        events: {
+          onReady: (event) => {
+            const iframe = event.target.getIframe();
+            iframe.setAttribute('allow', 'autoplay');
+          }
         }
       });
     }
@@ -181,9 +186,7 @@
     box.addEventListener('click', () => {
       lid.classList.toggle('open');
       message.style.display = lid.classList.contains('open') ? 'flex' : 'none';
-      if (lid.classList.contains('open')) {
-        spawnHearts(15);
-      }
+      if (lid.classList.contains('open')) spawnHearts(15);
     });
 
     playBtn.addEventListener('click', () => {
