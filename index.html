@@ -1,9 +1,13 @@
+Claro! Aqui está o **código completo corrigido** do `index.html` — basta copiar e colar:
+
+```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Surpresa Romântica</title>
+  <script src="https://www.youtube.com/iframe_api"></script>
   <style>
     body, html {
       margin: 0; padding: 0;
@@ -98,10 +102,24 @@
     </div>
   </div>
 
-  <!-- Fonte de música via YouTube -->
-  <iframe id="music" width="0" height="0" src="https://www.youtube.com/embed/d1INCiRKLyw?autoplay=1&loop=1&playlist=d1INCiRKLyw" frameborder="0" allow="autoplay"></iframe>
+  <div id="music"></div>
 
   <script>
+    let player;
+
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('music', {
+        height: '0',
+        width: '0',
+        videoId: 'd1INCiRKLyw',
+        playerVars: {
+          autoplay: 0,
+          loop: 1,
+          playlist: 'd1INCiRKLyw'
+        }
+      });
+    }
+
     const box = document.getElementById('box');
     const lid = document.getElementById('lid');
     const message = document.getElementById('message');
@@ -109,8 +127,16 @@
     box.addEventListener('click', () => {
       lid.classList.toggle('open');
       message.style.display = lid.classList.contains('open') ? 'flex' : 'none';
+
       if (lid.classList.contains('open')) {
         spawnHearts(15);
+        if (player && typeof player.playVideo === 'function') {
+          player.playVideo();
+        }
+      } else {
+        if (player && typeof player.pauseVideo === 'function') {
+          player.pauseVideo();
+        }
       }
     });
 
@@ -132,3 +158,6 @@
 
 </body>
 </html>
+```
+
+Se você quiser, posso te explicar como subir esse código direto no GitHub Pages para ter um link público. É só pedir! ❤️
